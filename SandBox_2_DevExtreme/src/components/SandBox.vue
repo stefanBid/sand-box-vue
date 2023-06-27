@@ -51,6 +51,50 @@
                 />
             </DxDataGrid>
         </div>
+        <div class="w-full overflow-x-hidden">
+          <DxDataGrid
+           key-expr="url"
+           :data-source="crawlerTableData"
+           :columns="columnsCrawledURL"
+           :allow-column-reordering="true"
+           :allow-column-resizing="true"
+           :column-auto-width="true"
+           :show-borders="true"
+           :show-row-lines="true"
+           :show-column-lines="true"
+           :hover-state-enabled="true"
+           :row-alternation-enabled="false"
+           :word-wrap-enabled="true"
+           >
+              <!--FILTERS-->
+              <DxFilterRow :visible="true" />
+              <DxHeaderFilter :visible="true" />
+              <!--PAGINATION-->
+              <DxPaging :page-size="pageSize" />
+              <DxPager
+               :allowed-page-sizes="pageSizes"
+               :show-info="true"
+               :show-navigation-buttons="true"
+               :show-page-size-selector="true"
+               :visible="true" 
+              />
+              <!--LOAD PANEL-->
+              <DxLoadPanel :enabled="true" text="" :show-pane="false" />
+              <!--SORTING-->
+              <DxSorting mode="multiple" />
+              <!--CHOOSER-->
+              <DxColumnChooser 
+               :enabled="true" 
+               mode="select" 
+               title="Choose columns" 
+              />
+              <!--FIXING-->
+              <DxColumnFixing :enabled="true" />
+              <!--SCROLLING-->
+              <DxScrolling column-rendering-mode="virtual"/>
+
+          </DxDataGrid>
+        </div>
     </div>
 </template>
 
@@ -67,9 +111,13 @@ import {
   DxPaging,
   //DxToolbar,
   //DxItem,
-  DxSelection
+  DxSelection,
+  DxColumnChooser,
+  DxColumnFixing,
+  DxScrolling
 } from 'devextreme-vue/data-grid';
 
+//Prima Tabella
 import type { Project } from '../models';
 
 const projects = ref<Project[]>([
@@ -169,4 +217,146 @@ const columns = computed(() => {
     }
   ];
 });
+
+//Seconda Tabella
+/*---- IMPORTS ----*/
+import type { CrawledURLs } from '../models';
+/*---- DATA ----*/
+const crawledURLs = ref<CrawledURLs[]>([
+  {
+    url: 'https://www.google.com',
+    statusCode: '200',
+    isInternal: true,
+    content:['html', 'utf-8'],
+    indexable: true,
+    depth: 0,
+    inLinks: 0,
+    outLinks: 0,
+    metaRobots1:'aaaaa,bbbbb'
+  }
+]);
+const pageSize = ref<number>(10);
+const pageSizes = ref<number[]>([10, 20, 50, 100, 200, 500]);
+/*---- COMPUTED ----*/
+const crawlerTableData = computed(()=>{
+  if(!crawledURLs.value.length) return;
+  let crawledURLsTransformed = crawledURLs.value.map((singleUrl:CrawledURLs)=>{
+    // Trasformo il dato ottentuto dal server in un oggetto che può essere letto dalla tabella
+    let urlExported:string = singleUrl.url;
+    let urlLen:number = singleUrl.url.length;
+    let protocol:string = '';
+    if(singleUrl.url.startsWith('http:')) protocol = 'http';
+    else if(singleUrl.url.startsWith('https:')) protocol = 'https';
+
+    return{
+      ...singleUrl,
+      urlExported,
+      urlLen,
+      protocol
+    }
+  })
+  console.log(crawledURLsTransformed);
+  return crawledURLsTransformed;
+})
+
+const columnsCrawledURL = computed(()=>{
+  return [
+    {
+      //cellTemplate: "urlTitleCellTemplate",
+      dataField: "url",
+      caption: "URL",
+      dataType: "string",
+      alignment: "left",
+      width:350,
+      allowHeaderFiltering: false,
+      fixed: true,
+      fixedPosition: "left",
+      visible:true
+    },
+    {
+      dataField: "urlExported",
+      caprion:"Export URL",
+      dataType: "string",
+      alignment: "left",
+      width:350,
+      allowHeaderFiltering: false,
+      visible:false,
+    },
+    {
+      dataField: "urlLen",
+      caption: "URL Length",
+      alignment: "left",
+      visible:false,
+      allowHeaderFiltering: false,
+    },
+    {
+      //cellTemplate: "statusCellTemplate",
+      dataField: "statusCode",
+      caption: "HTTP Status Code",
+      alignment: "left",
+      width:200,
+    },
+    {
+      dataField: "isInternal",
+      caption: "URL Type",
+      dataType:"string",
+      alignment: "left",
+      width:130,
+    },
+    {
+      //cellTemplate: "contentTypeCellTemplate",
+      dataField: "content",
+      caption: "Content Type",
+      dataType: "string",
+      alignment: "left",
+      width:150,
+    },
+    {
+      //cellTemplate: "indexableCellTemplate",
+      dataField: "indexable", 
+      caption: "Indexable", 
+      alignment: "left",
+      width: 150,
+    },
+    {
+      //cellTemplate: "schemeCellTemplate",
+      dataField: "protocol",
+      caption: "Scheme",
+      alignment: "left",
+      width:110,
+    },
+    {
+      //cellTemplate: "depthCellTemplate",
+      dataField: "depth",
+      caption: "Crawl Depth",
+      alignment: "left",
+      width:140,
+    },
+    {
+      dataField: "inLinks", 
+      caption: "In-links", 
+      dataType: "number",
+      alignment: "left",
+      allowHeaderFiltering: false,
+      width: 110,
+    },
+    {
+      dataField: "outLinks", 
+      caption: "Out-Links", 
+      dataType: "number",
+      alignment: "left",
+      allowHeaderFiltering: false,
+      visible:false,
+      width: 110,
+    },
+    {
+      //cellTemplate: "metaRobotsCellTemplate",
+      dataField: "metaRobots1",
+      caption: "Meta Robots",
+      dataType: "string",
+      alignment: "left",
+      width:140,
+    }
+  ]
+})
 </script>

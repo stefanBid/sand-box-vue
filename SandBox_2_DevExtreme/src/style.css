@@ -14,7 +14,6 @@
   @apply outline-none;
   @apply border-none;
   @apply no-underline;
-  @apply scroll-smooth;
 }
 
 body{
@@ -26,6 +25,5 @@ body{
 
 html{
   @apply text-percent-base;
-  @apply overflow-x-hidden;
   @apply lg:text-percent-sm;
 }
