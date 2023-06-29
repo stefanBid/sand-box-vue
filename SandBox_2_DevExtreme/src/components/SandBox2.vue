@@ -24,6 +24,49 @@
               :show-page-size-selector="true"
               :visible="true" 
         />
+        <template #employeeTemplate="{data}">
+          <div 
+            v-if="typeOfEmployee(data.data.Employee) === 0"
+            class="flex flex-row items-center gap-x-7">
+            <div 
+              class="bg-center bg-cover border-2 border-black border-solid rounded-full w-14 h-14"
+              style="background-image: url(https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?w=900&t=st=1688038265~exp=1688038865~hmac=85b1b4675e468df3856c03a610457e372d97ff3781a5e03ff4ea6a677a9f3dff);"/>
+            <h1 >{{ data.data.Employee }}</h1>
+          </div>
+          <div 
+            v-else-if="typeOfEmployee(data.data.Employee) === 1"
+            class="flex flex-row items-center gap-x-7">
+            <div 
+              class="bg-center bg-cover border-2 border-black border-solid rounded-full w-14 h-14"
+              style="background-image: url(https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?w=1060&t=st=1688038545~exp=1688039145~hmac=ddef869d1b1638e268d33934b26d5b5fc16a3645a28bc6ea77c1d891b33b510a);"/>
+            <h1 >{{ data.data.Employee }}</h1>
+          </div>
+          <div 
+            v-else-if="typeOfEmployee(data.data.Employee) === 2"
+            class="flex flex-row items-center gap-x-7">
+            <div 
+              class="bg-center bg-cover border-2 border-black border-solid rounded-full w-14 h-14"
+              style="background-image: url(https://img.freepik.com/free-photo/portrait-smiling-young-man-looking-camera_23-2148193854.jpg?w=360&t=st=1688038619~exp=1688039219~hmac=eb478a341644cc7492741079c7e2222fd41fffd3bf485d55356103fcf0cbbd63);"/>
+            <h1 >{{ data.data.Employee }}</h1>
+          </div>
+          <div 
+            v-else-if="typeOfEmployee(data.data.Employee) === 3"
+            class="flex flex-row items-center gap-x-7">
+            <div 
+              class="bg-center bg-cover border-2 border-black border-solid rounded-full w-14 h-14"
+              style="background-image: url(https://img.freepik.com/free-photo/expressive-redhead-guy-beige-shirt_176420-32329.jpg?w=1060&t=st=1688038746~exp=1688039346~hmac=564ed82935d58b9f7cbf9f0e6f683afad991db746cf809d2a6e4a0d9bc2d2782);"/>
+            <h1 >{{ data.data.Employee }}</h1>
+          </div>
+          <div 
+            v-else
+            class="flex flex-row items-center gap-x-7">
+            <div 
+              class="bg-center bg-cover border-2 border-black border-solid rounded-full w-14 h-14"
+              style="background-image: url(https://img.freepik.com/free-photo/anonymous-man-head-covered-with-paper-bag_53876-146314.jpg?w=1060&t=st=1688046107~exp=1688046707~hmac=bb4d2a39340c6f77e1ca9425b65deb60690465acd9531cd751186707fd076ae7);"/>
+            <h1 >Unknow</h1>
+          </div>
+
+        </template>
     </DxDataGrid>
   </AppSandBoxContainer>
 </template>
@@ -91,6 +134,7 @@ const columns = computed(() => {
       allowSorting: true,
       allowFiltering: false,
       allowHeaderFiltering: true,
+      cellTemplate: 'employeeTemplate',
       dataType: 'string',
       alignment: 'left',
     },
@@ -106,6 +150,21 @@ const columns = computed(() => {
     }
   ]
 });
+
+const typeOfEmployee = (employee: string) => {
+  switch (employee) {
+    case 'Harv Mudd':
+      return 0;
+    case 'Jim Packard':
+      return 1;
+    case 'Todd Hoffman':
+      return 2;
+    case 'Clark Morgan':
+      return 3;
+    default:
+      return 4;
+  }
+};
 
 //2) Setup Remote Operations
 
@@ -185,6 +244,7 @@ const customs = new CustomStore({
   }
 */
 });
+
 
 const isNotEmpty = (value: any) => {
   return value !== undefined && value !== null && value !== '';
