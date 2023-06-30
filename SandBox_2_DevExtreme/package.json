@@ -9,17 +9,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.16",
-    "@vue/apollo-composable": "^4.0.0-beta.7",
+    "@apollo/client": "^3.7.15",
+    "@vue/apollo-composable": "^4.0.0-beta.5",
+    "@rollup/plugin-graphql": "^2.0.3",
+
     "@vueuse/core": "^10.1.2",
     "devextreme": "22.2.6",
     "devextreme-vue": "22.2.6",
-    "graphql": "^15.8.0",
+    "graphql": "^16.6.0",
+    "graphql-request": "^6.1.0",
     "graphql-tag": "^2.12.6",
-    "vue": "^3.3.2"
+    "graphql-ws": "^5.13.1",
+    "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.1.0",
+    "graphql-tag": "^2.9.0",
+    "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
     "tailwindcss": "^3.3.2",

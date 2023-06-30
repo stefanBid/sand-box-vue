@@ -9,7 +9,7 @@ const props = withDefaults(defineProps<SandBoxContainerProps>(), {
 </script>
 
 <template>
-  <div class="space-y-7">
+  <div class="w-full space-y-7">
     <h1 class="text-4xl font-semibold">{{ props.title }}</h1>
     <slot />
   </div>

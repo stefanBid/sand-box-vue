@@ -5,10 +5,10 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [
     vue({
-      script:{
-          defineModel: true,
-          propsDestructure: true
+      script: {
+        defineModel: true,
+        propsDestructure: true
       }
     })
   ],
-})
+});

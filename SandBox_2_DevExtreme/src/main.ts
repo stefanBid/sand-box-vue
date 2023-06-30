@@ -22,5 +22,8 @@ const app = createApp({
     provide(DefaultApolloClient, apolloClient)
   },
   render: () => h(App),
-})
+});
+
+//Se voglio utilizzare le query in un componente (all'interno di una funzione), devo fornire il client Apollo
+export default apolloClient;
 app.mount('#app')

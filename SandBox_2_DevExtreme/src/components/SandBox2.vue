@@ -80,7 +80,7 @@ import { computed } from 'vue';
 
 //1) Setup Tabella
 
-const pageSizes = [5, 10, 20, 30, 40, 50];
+const pageSizes = [5, 10, 20, 30, 40, 50, 100];
 
 const operations = computed(() => {
   return {
@@ -186,9 +186,9 @@ const errorMessage = 'Impossibile caricare i dati';
 const customs = new CustomStore({
   //Chiave primaria dei dati da recuperare
   key: 'OrderNumber',
-
+  loadMode:'processed',
   //Funzione che carica i dati
-  load: (loadOptions: any) => {
+  load: (loadOptions:any) => {
     let params = '?';
     ['skip', 'take', 'requireTotalCount', 'requireGroupCount', 'sort', 'filter', 'totalSummary', 'group', 'groupSummary']
       .forEach((op: string) => {
