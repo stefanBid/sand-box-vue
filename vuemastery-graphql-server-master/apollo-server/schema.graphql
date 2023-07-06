@@ -25,7 +25,8 @@ input UpdateBookInput {
 }
 
 type Query {
-  allBooks(search: String): [Book]
+  allBooks(search: String, take: Int, skip: Int, sortSelector: String, sortDescending: Boolean): [Book]
+  getBooksCount: Int
   getBook(id: ID!): Book!
 }
 

@@ -1,0 +1,20 @@
+query AllBooks(
+  $take: Int
+  $skip: Int
+  $sortSelector: String
+  $sortDescending: Boolean
+) {
+  allBooks(
+    take: $take
+    skip: $skip
+    sortSelector: $sortSelector
+    sortDescending: $sortDescending
+  ) {
+    id
+    title
+    author
+    description
+    rating
+    year
+  }
+}
